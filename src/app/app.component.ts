@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ng-tree';
+
+  addNode() {
+    // route.change('/add-node');
+  }
 }

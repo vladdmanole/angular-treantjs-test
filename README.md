@@ -1,4 +1,4 @@
-# NgTree
+# Angular 6 TreantJS test - adding nodes with a form
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.5.
 
