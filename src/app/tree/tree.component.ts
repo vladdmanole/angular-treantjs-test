@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
-import { TreeNodeChild } from '../models/TreeNodeChild';
+import { TreeNode } from '../models/TreeNode';
 import { TreeService } from '../tree.service';
 import * as $ from 'jquery';
 
@@ -21,7 +21,7 @@ export class TreeComponent implements OnInit {
     siblingSeparation: 15,
     subTeeSeparation: 15,
     rootOrientation: 'NORTH',
-    scrollbar: 'fancy',
+    scrollbar: 'native',
     node: {
       HTMLclass: 'treant-class',
       drawLineThrough: false
@@ -38,7 +38,7 @@ export class TreeComponent implements OnInit {
     }
   };
 
-  rootNode: TreeNodeChild = {
+  rootNode: TreeNode = {
     text: {
       name: 'ROOT'
     },
@@ -49,7 +49,7 @@ export class TreeComponent implements OnInit {
   };
 
   constructor(private treeService: TreeService) {
-    this.treeService.nodesChange$.subscribe((node: TreeNodeChild) => {
+    this.treeService.nodesChange$.subscribe((node: TreeNode) => {
       // const arr = this.constructTreant(this.options, this.treeService.nodes);
       if (node.HTMLid !== 'tree-root') {
         this.treant.tree.addNode(node.parent, node);

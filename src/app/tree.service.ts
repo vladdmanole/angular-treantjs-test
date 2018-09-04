@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TreeNodeChild } from './models/TreeNodeChild';
+import { TreeNode } from './models/TreeNode';
 import { Subject } from 'rxjs';
 
 @Injectable({
@@ -7,13 +7,13 @@ import { Subject } from 'rxjs';
 })
 export class TreeService {
 
-  nodes: Array<TreeNodeChild> = new Array<TreeNodeChild>();
+  nodes: Array<TreeNode> = new Array<TreeNode>();
   nodeIncrementalId = 0;
-  nodesChange$: Subject<TreeNodeChild> = new Subject<TreeNodeChild>();
+  nodesChange$: Subject<TreeNode> = new Subject<TreeNode>();
 
   constructor() {}
 
-  addNode(node: TreeNodeChild) {
+  addNode(node: TreeNode) {
     node.id = this.nodeIncrementalId++;
     this.nodes.push(node);
     this.nodesChange$.next(node);

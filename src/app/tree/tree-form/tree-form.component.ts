@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TreeNodeChild } from '../../models/TreeNodeChild';
+import { TreeNode } from '../../models/TreeNode';
 import { TreeService } from '../../tree.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { TreeService } from '../../tree.service';
 })
 export class TreeFormComponent implements OnInit {
 
-  nodeStructure: TreeNodeChild = new TreeNodeChild();
+  nodeStructure: TreeNode = new TreeNode();
   constructor(public treeService: TreeService) { }
 
   ngOnInit() {
@@ -22,10 +22,10 @@ export class TreeFormComponent implements OnInit {
     );
   }
 
-  onAddNode(node: TreeNodeChild) {
+  onAddNode(node: TreeNode) {
     node.HTMLid = this.uuidv4();
     this.treeService.addNode(node);
-    this.nodeStructure = new TreeNodeChild();
+    this.nodeStructure = new TreeNode();
   }
 
 }
