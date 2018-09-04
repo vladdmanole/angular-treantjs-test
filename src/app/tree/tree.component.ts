@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { TreeNodeChild } from '../models/TreeNodeChild';
 import { TreeService } from '../tree.service';
+import * as $ from 'jquery';
 
 declare var Treant: any;
 
@@ -43,39 +44,44 @@ export class TreeComponent implements OnInit {
     },
     HTMLclass: 'angular',
     HTMLid: 'tree-root',
+    id: 0,
     image: '/assets/img/angular.png',
   };
 
   constructor(private treeService: TreeService) {
     this.treeService.nodesChange$.subscribe((node: TreeNodeChild) => {
-      const arr = this.constructTreant(this.options, this.treeService.nodes);
-      this.treant = new Treant(arr);
+      // const arr = this.constructTreant(this.options, this.treeService.nodes);
+      if (node.HTMLid !== 'tree-root') {
+        this.treant.tree.addNode(node.parent, node);
+      }
+      // this.treant = new Treant(arr);
     });
   }
 
   ngOnInit() {
+    this.treant = new Treant([this.options, this.rootNode], Function.prototype, $);
     this.treeService.addNode(this.rootNode);
   }
 
   // we clone the references of the treeService nodes array and then link the new objects back together
-  private constructTreant(options, treeNodes: Array<TreeNodeChild>) {
-    let tempArr: any = treeNodes.slice();
+  // private constructTreant(options, treeNodes: Array<TreeNodeChild>) {
+  //   let tempArr: any = treeNodes.slice();
 
-    tempArr = tempArr.map(obj => ({ ...obj })); // lose them references
-    tempArr.forEach(function (node: TreeNodeChild, i, nodes: Array<TreeNodeChild>) {
-      if (node.HTMLid !== 'tree-root') {
-        if (node.parent.HTMLid !== 'tree-root') {
-          node.parent = nodes.find(function (parent) {
-            return node.parent.HTMLid === parent.HTMLid;
-          });
-        } else {
-          node.parent = nodes[0];
-        }
-      }
-    });
+  //   tempArr = tempArr.map(obj => ({ ...obj })); // lose them references
+  //   tempArr.forEach(function (node: TreeNodeChild, i, nodes: Array<TreeNodeChild>) {
+  //     if (node.HTMLid !== 'tree-root') {
+  //       if (node.parent.HTMLid !== 'tree-root') {
+  //         node.parent = nodes.find(function (parent) {
+  //           return node.parent.HTMLid === parent.HTMLid;
+  //         });
+  //       } else {
+  //         node.parent = nodes[0];
+  //       }
+  //     }
+  //   });
 
-    tempArr.unshift(options);
-    return tempArr;
-  }
+  //   tempArr.unshift(options);
+  //   return tempArr;
+  // }
 
 }
