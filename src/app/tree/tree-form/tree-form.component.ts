@@ -16,9 +16,12 @@ export class TreeFormComponent implements OnInit {
   }
 
   private uuidv4() {
-    return ([1e7] as any + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+    const windowObject: any = window; // avoid typescript error TS2551:Property 'msCrypto' does not exist on type 'Window'
+    const cryptoObject: any = windowObject.crypto || windowObject.msCrypto;
+    return ([1e7] as any + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c: number) => {
       // tslint:disable-next-line:no-bitwise
-      (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+      (c ^ cryptoObject.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+    }
     );
   }
 
